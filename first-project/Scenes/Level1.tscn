@@ -1,0 +1,77 @@
+[gd_scene load_steps=14 format=3 uid="uid://d2375ad1qp0sv"]
+
+[ext_resource type="PackedScene" uid="uid://ct7srm4hlp8do" path="res://Scenes/stadium.tscn" id="1_slnnj"]
+[ext_resource type="Texture2D" uid="uid://cbqa1nbgshrav" path="res://Assets/football_stadium_img.jpg" id="2_6ll4n"]
+[ext_resource type="PackedScene" uid="uid://c7llpico28vck" path="res://Scenes/wall.tscn" id="2_t3or0"]
+[ext_resource type="PackedScene" uid="uid://bjkabhqse7veh" path="res://Scenes/level_passer.tscn" id="3_ysn8j"]
+[ext_resource type="PackedScene" uid="uid://cc3c0kwa05q4j" path="res://Scenes/ball.tscn" id="4_6ll4n"]
+[ext_resource type="ArrayMesh" uid="uid://b0qw0k8nlokkj" path="res://Assets/soccer_net.obj" id="4_t3or0"]
+[ext_resource type="Script" uid="uid://en71q0u20mq3" path="res://Scripts/ball.gd" id="5_kylad"]
+[ext_resource type="Texture2D" uid="uid://dj3cnx8vpvqry" path="res://Assets/soccer_texture_img.png" id="8_kylad"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r7jfx"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_8vsrk"]
+sky_material = SubResource("ProceduralSkyMaterial_r7jfx")
+
+[sub_resource type="Environment" id="Environment_c77c4"]
+background_mode = 2
+sky = SubResource("Sky_8vsrk")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdlbp"]
+albedo_texture = ExtResource("2_6ll4n")
+uv1_offset = Vector3(0.5, 0, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2h8qs"]
+albedo_texture = ExtResource("8_kylad")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c77c4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Stadium" parent="." instance=ExtResource("1_slnnj")]
+
+[node name="MeshInstance3D" parent="Stadium" index="1"]
+material_override = SubResource("StandardMaterial3D_bdlbp")
+
+[node name="Wall" parent="Stadium" instance=ExtResource("2_t3or0")]
+transform = Transform3D(-4.37114e-08, 0, -0.1, 0, 1, 0, 1, 0, -4.37114e-09, -6, 3, 3)
+
+[node name="Wall2" parent="Stadium" instance=ExtResource("2_t3or0")]
+transform = Transform3D(-4.37114e-08, 0, -0.1, 0, 1, 0, 1, 0, -4.37114e-09, -2, 3, 0)
+
+[node name="Wall3" parent="Stadium" instance=ExtResource("2_t3or0")]
+transform = Transform3D(-4.37114e-08, 0, 0.1, 0, 1, 0, -1, 0, -4.37114e-09, -5, 3, -2)
+
+[node name="LevelPasser" parent="Stadium" instance=ExtResource("3_ysn8j")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7, 2.3, 0.045)
+mesh = ExtResource("4_t3or0")
+skeleton = NodePath("../..")
+
+[node name="Area3D" parent="Stadium/LevelPasser" index="0"]
+transform = Transform3D(0.72, 0, 2.26979e-14, 0, 2.07567, 0, -7.10543e-15, 0, 2.3, -0.21, 0.585, -0.09)
+
+[node name="Ball" parent="." instance=ExtResource("4_6ll4n")]
+transform = Transform3D(-0.148699, 0.106689, 0.98311, 0.789118, -0.586352, 0.182989, 0.595971, 0.803, 0.00300056, 0, 6, 0)
+script = ExtResource("5_kylad")
+
+[node name="BallMesh" parent="Ball" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_2h8qs")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 3.48007e-09, -2.98023e-08, -3.48007e-09, 1, -3.20528e-08, 2.98023e-08, 3.20528e-08, 1, 1, 7, 12)
+
+[editable path="Stadium"]
+[editable path="Stadium/Wall"]
+[editable path="Stadium/LevelPasser"]
+[editable path="Ball"]

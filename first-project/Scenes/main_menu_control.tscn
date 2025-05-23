@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1is0ueehep3l"]
+
+[ext_resource type="Script" uid="uid://b10m77lmuvp7l" path="res://Scripts/main_menu_control.gd" id="1_qycic"]
+[ext_resource type="Texture2D" uid="uid://nul6ne7pv3rs" path="res://godot background.png" id="2_xfhoq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xfhoq"]
+texture = ExtResource("2_xfhoq")
+modulate_color = Color(0.244776, 0.244776, 0.244776, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qycic"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+
+[node name="MainMenuControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 4.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qycic")
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0.184314, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_xfhoq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.0
+offset_top = -57.5
+offset_right = 89.0
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Play" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_qycic")
+text = "Play"
+autowrap_mode = 3
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_qycic")
+text = "Quit
+"
+autowrap_mode = 3
+
+[connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
